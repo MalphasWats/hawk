@@ -14,4 +14,4 @@ This repository takes a step-by-step look at creating a simple ATSAMD10-based de
 7. Laying Traces.
 8. Filled Zones.
 9. Silkscreen.
-10. PCB Manufacture.
+10. [PCB Manufacture.](https://github.com/MalphasWats/hawk/blob/master/articles/pcb-manufacture.markdown)
