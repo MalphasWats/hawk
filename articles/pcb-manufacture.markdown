@@ -46,6 +46,8 @@ Once you're happy with your options click *Save to cart*.
 
 ![Save to cart][127]
 
+You'll be asked to create an account and pay, once you've done that, you can track your order's progress. Depending on which delivery option you choose, your order will arrive 1-3 weeks later neatly boxed and ready for assembly!
+
 [119]: screenshots/119-completed-board.png
 [120]: screenshots/120-check-DRC.png
 [121]: screenshots/121-plot.png
