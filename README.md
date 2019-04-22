@@ -3,6 +3,8 @@ Small ARM dev board based on ATSAMD10.
 
 This repository takes a step-by-step look at creating a simple ATSAMD10-based dev-board using KiCAD.
 
+![Board](board.png)
+
 ## Contents
 
 1. [Getting Started - Creating a Schematic.](https://github.com/MalphasWats/hawk/blob/master/articles/creating-the-schematic.markdown)
