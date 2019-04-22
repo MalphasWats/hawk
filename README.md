@@ -6,9 +6,9 @@ This repository takes a step-by-step look at creating a simple ATSAMD10-based de
 ## Contents
 
 1. [Getting Started - Creating a Schematic.](https://github.com/MalphasWats/hawk/blob/master/articles/creating-the-schematic.markdown)
-2. Adding Battery Power.
-3. Footprints & Net-lists.
-4. Creating a PCB.
+2. [Adding Battery Power.](https://github.com/MalphasWats/hawk/blob/master/articles/adding-battery-power.markdown)
+3. [Footprints & Net-lists.](https://github.com/MalphasWats/hawk/blob/master/articles/footprints-and-netlists.markdown)
+4. [Creating a PCB.](https://github.com/MalphasWats/hawk/blob/master/articles/creating-a-pcb.markdown)
 5. Aside: Designing a Board Outline.
 6. Component Layout.
 7. Laying Traces.
