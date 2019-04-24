@@ -16,7 +16,7 @@ Ok, we have a nice blank schematic. Press the *A* key to add a *symbol*. This br
 
 ![Symbol Browser][003]
 
-Now, this is where things go immediately off the rails - the basic installation of KiCAD does not have a symbol for the Microcontroller we're using in this project. You can download these footprints from the [KiCAD GitHub Symbol Library](https://kicad.github.io/symbols/).
+Now, this is where things go immediately off the rails - the basic installation of KiCAD does not have a symbol for the Microcontroller we're using in this project. You can download these symbols from the [KiCAD GitHub Symbol Library](https://kicad.github.io/symbols/).
 
 Once you've downloaded the correct library [ (MCU Microchip SAMD) ](https://kicad.github.io/symbols/MCU_Microchip_SAMD), choose *Manage Symbol Libraries...* from the *Preferences* menu, then click the *Browse Libraries...* button to add the downloaded library.
 
