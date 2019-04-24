@@ -146,13 +146,92 @@ Next, add a resistor (or duplicate the one from the reset pull up), place it nea
 
 ![LED Circuit][023]
 
-Now we can use the *W* key to switch to wiring mode and connect the circuit:
+Use the *W* key to switch to wiring mode and connect the circuit:
 
 ![Complete LED circuit][024]
 
-Now is a good spot to annotate the schematic **and save it**:
+Now is a good point to annotate the schematic **and save it**:
 
 ![Annotated Schematic][025]
+
+We could simply stop there. We could program the MCU using one of those clip things and then we have everything we need to blink an LED, but ultimately the feeling of achievement would fade and we'd be left with more e-junk. Let's expand our circuit a little so it's useful after we've flashed a light.
+
+We'll start off adding a programming header. I don't have one of those clip things that would fit this chip.
+
+Press *A* to add a new symbol, expand the *Connector_Generic* category and find a 2x3 Odd/Even connector:
+
+![SWD Connector][026]
+
+The SAMD10 is programmed using the Single-Wire-Debug (SWD) interface, so-called because it uses just a single wire. Plus one other wire, a reset wire, power and ground. So 5 wires. There are some standard connector layouts for SWD as part of the JTAG definition, but these tend to use connectors with at least 10 pins and as many as 20. I already have a nice little 2x3 programming ribbon cable so I'm using that. The nice thing about tutorials is you're entirely free to do it you're own way!
+
+Place the connector on the schematic and rename it to something useful. Remember you can hover over the *Conn_02x03_Odd_Even* label and press *E*. I've named it *SWD_PGM*.
+
+![Place Connector][027]
+
+Earlier we created some global labels for *reset*, *SWDIO* and *SWCLK*. Duplicate those, along with a *+3V3* and a *GND* and connect them to the connector leads as below:
+
+![Connect programming header][028]
+
+I've used this layout because it's similar to the ISP layout for programming AVR via SPI. This helps me remember what each pin is for.
+
+Next up, let's add some headers for some of the GPIO pins. Use *A* to add 2 generic 1x4 connectors:
+
+![Generic Connector][029]
+
+Place one and name it:
+
+![Place Connector][030]
+
+Duplicate and rename it:
+
+![Duplicate connector][031]
+
+I wanted to have an extra visual queue for which connector is which, so I mirrored the second one so the leads pointed the other way. Hover your mouse over the symbol and press *E*, choose *Mirror around y-axis* from the *Aspect* section:
+
+![Mirror Connector][032]
+
+Create some more *global labels*:
+
+![GPIO Labels][033]
+
+One for each of the spare MCU pins:
+
+![GPIO Labels placed][034]
+
+Now duplicate each one and connect them to the generic connector pins:
+
+![GPIO Labels connected to connector][035]
+
+We've reached another good point to annotate and **save the schematic**
+
+![Annotate schematic][036]
+
+One thing that bugged me about the annotations for the connectors was that one of the GPIO connectors was *J1*, the programming connector was *J2* and the other GPIO connector ended up with *J3*. If you're more normal this probably doesn't bother you.
+
+To edit the *Reference field*, hover over it with your mouse and press *E*.
+
+![Change reference field][037]
+
+You can change the numbers to make things more sensible.
+
+![Updated Annotations][038]
+
+We've also reached the end of this part of the tutorial. Again, at this stage we could make the PCB and we'd have a board that we could actually use, but there are a few more things I want to add first.
+
+
+## Caveats
+
+It's worth noting at this point that there are a few issues with the schematic. I made the thing and took all of the screenshots in one go with a view to creating this tutorial rather than a super-awesome-development-board. Afterwards I was reading the [SAMD10 Datasheet](http://ww1.microchip.com/downloads/en/devicedoc/atmel-42242-sam-d10_datasheet.pdf). Section 36 has some suggestions for a reset circuit (p 854) which includes an extra resistor to control the discharge of the bypass capacitor when the reset pin is grounded. It also notes that the reset pin has an internal pull-up resistor so doesn't necessarily need an external one. Personally I think it's a good habit to get into, if only for reset pins.
+
+It also strongly recommends (p 858) that the *SWCLK* pin has a pull-up resistor added to it to prevent noise. If we were making a commercial product, we'd probably go back and fix that. I know from previous experiments with this chip though that it should still work in most cases without it.
+
+I also noticed that there's no easy way to supply power to any theoretical breadboard we might plug this device into. Although we could actually use the *+3V3* and *GND* pins from the programming connector if we needed to, this wouldn't be ideal. To fix this, we could instead make the 1x4 GPIO connectors into 1x5 and add connections to the power net.
+
+This is what the updated schematic for these fixes might look like:
+
+![Updated Schematic][038-5]
+
+The rest of the tutorial however will still use the older version. I've ordered the boards to be made like this too, so we can actually find out how well it works anyway!
 
 [001]: screenshots/001-new-kicad-project.png
 [002]: screenshots/002-new-kicad-schematic.png
@@ -192,3 +271,5 @@ Now is a good spot to annotate the schematic **and save it**:
 [036]: screenshots/036-connectors-annotated.png
 [037]: screenshots/037-editing-connector-annotations.png
 [038]: screenshots/038-connector-annotations-edited.png
+
+[038-5]: screenshots/038-updated-schematic.png
