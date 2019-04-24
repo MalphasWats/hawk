@@ -64,7 +64,49 @@ You'll also notice in the screenshot below that I've moved the labels for the MC
 
 *M*, *C*, *A* and *P* are super useful shortcuts for laying out schematics. They become muscle memory quite quickly.
 
+Using the *scroll-wheel* on the mouse lets you zoom in so  you can actually see what you're doing. As far as I've managed to work out, zooming like this centres the zoom wherever your mouse pointer is.
+
 ![Place Power Symbols][011]
+
+Notice that the capacitor and MCU aren't connected directly, we've just connected them to the power net, it'll be up to us to place them sensibly on the PCB so that the capacitor can do its job.
+
+Ok, let's create a reset circuit. First, we want to add a *pull-up* resistor to the MCU's reset pin. If we simply leave the pin floating, the MCU could behave strangely as our circuit gets subjected to electromagnetic interference.
+
+We'll start by labelling the reset pin. I use *global* labels because I think they make a schematic more readable. Choose *Global Label* from the *Place* menu and then click on the end of the lead for *pin 6* to bring up the label pane:
+
+![Adding a global label][012]
+
+Give the label a sensible name and make sure *Left* is chosen for *Orientation*. Click *OK* and then click the mouse on the end of the *pin 6* lead to attach the label to it.
+
+![Place the label][013]
+
+Whilst we're at it, let's add 2 more labels for the programming pins, we're already in *Label Place mode* so we just need to click on the schematic to add a new label:
+
+![Programming pin labels][014].
+
+Next let's add the pull-up resistor. Press *A* to go back into symbol placing mode and bring up the symbol browser. You'll find it in the *Devices* section again, called simply *R*.
+
+Click to place it, then use the *C* shortcut to copy the 3V3 power symbol and attach it to the top lead of the resistor. Use *C* again to copy the *reset* label from the MCU pin 6.
+
+With the *reset* label attached to the mouse, press the *R* key to rotate it 90 degrees. Press the *R* key until the label is pointing *up* and attach it to the bottom lead of the resistor.
+
+Finally, hover over the bottom *R* label, press *E* and add a suitable resistance value - I tend to use 10K ohm:
+
+![Pull up resistor][015]
+
+Alright, we have a stable circuit for an MCU. If you look at each symbol it has a second label with the symbol designator (U, C, R) and a question mark (?). We need to annotate our schematic to give each of these a unique identifying number. You can simply hover over each one, press *E* and type it manually, and indeed sometimes that's the way you want to do it, however, there is also a tool built in that will do it for us. You can do this at any stage of development, including right at the very end, but I like to try to keep an eye on what numbers mean what and do it as I go.
+
+Choose *Annotate Schematic...* from the *Tools* menu to bring up the annotation tool
+
+![Annotation tool][016]
+
+Default settings are fine, simply click *Annotate* to automatically annotate the schematic symbols:
+
+![Annotated Schematic][017]
+
+We get *U1*, *C1*, and *R1*.
+
+**Now is also a good place to save the schematic if you haven't already.**
 
 [001]: screenshots/001-new-kicad-project.png
 [002]: screenshots/002-new-kicad-schematic.png
