@@ -108,6 +108,52 @@ We get *U1*, *C1*, and *R1*.
 
 **Now is also a good place to save the schematic if you haven't already.**
 
+Now we'll add a button so we can reset the MCU when we're frustrated that it isn't doing what it's supposed to be because we wrote the wrong code but haven't accepted that yet.
+
+Press *A* to add a symbol, navigate to *Switches* and find the SW_Push symbol. It doesn't really matter too much which switch symbols we use for a simple Single-pole-single-throw switch, but this is technically the *proper* one.
+
+![Push Switch][018]
+
+Double-click to choose the symbol then click somewhere on the schematic to place it.
+
+Use the *C* key to duplicate the *reset* label and connect it to the left-hand lead of the switch symbol.
+
+Next duplicate a *GND* symbol from somewhere and place it *near* the right-hand lead:
+
+![Reset Circuit][019]
+
+You *could* simply connect the *GND* symbol to the switch, but I think it looks a little bit cluttered, so instead, we'll leave a little gap and use the *Wiring tool* to connect the symbols.
+
+Press the *W* key to choose the wiring tool and then click the little circle stuck to the end of the right-hand lead of the switch symbol, then move your mouse, drawing a green wire behind and click the little circle at the top of the *GND* symbol to connect them together:
+
+![Complete reset circuit][020]
+
+So now we have *A*, *P*, *M*, *E*, *R* and *W* shortcuts. All well worth remembering.
+
+All development boards need an LED, otherwise how are you supposed to write a Blink program for it? Let's add one.
+
+Start off by adding a new *Global Label*, call it *LED* and orient it *Right*:
+
+![LED Label][021]
+
+Connect it to *pin 13* of the MCU.
+
+Next, press *A* to add an LED symbol. Whilst the symbol browser has an LED section, all the symbols in here appear to be special ones. We just want the LED symbol in the *Device* category. I prefer the *LED_Alt* version. Double click it and then place it somewhere on the schematic.
+
+![LED symbol][022]
+
+Next, add a resistor (or duplicate the one from the reset pull up), place it near the LED symbol and edit its value to 1k. Now, duplicate the *LED* label, rotate it and connect it to the left-hand lead of the LED. Finally, duplicate a *GND* symbol and place it near the right-hand lead of the resistor:
+
+![LED Circuit][023]
+
+Now we can use the *W* key to switch to wiring mode and connect the circuit:
+
+![Complete LED circuit][024]
+
+Now is a good spot to annotate the schematic **and save it**:
+
+![Annotated Schematic][025]
+
 [001]: screenshots/001-new-kicad-project.png
 [002]: screenshots/002-new-kicad-schematic.png
 [003]: screenshots/003-adding-a-component.png
