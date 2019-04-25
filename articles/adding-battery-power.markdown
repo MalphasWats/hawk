@@ -94,7 +94,7 @@ And that's it, our circuit is complete!
 
 ## Caveats
 
-The whole battery wiring issue bothers me, and actually I wonder if you're better off *not* using connector with enforced orientation and simple marking on the board silkscreen (we'll get to that later) the polarity and simply solder in 2.00mm header pins.
+The whole battery wiring issue bothers me, and actually I wonder if you're better off *not* using connector with enforced orientation and simple marking on the board silkscreen (we'll get to that later) the polarity and simply solder in 2.00mm header pins. It's interesting that it only occurred to me when I wrote this that that might have been the reason for my featherwing board going pop!
 
 It's worth considering adding a power switch to the mix - this could be added between the +BATT symbol and the connector pin. In my experience so far, finding nice power switches is actually harder than you think. ( [Here's a nice one](https://uk.rs-online.com/web/p/products/1238939/) )
 
