@@ -80,6 +80,8 @@ These are the stressful bits of designing your own boards. Let's press on...
 
 Press *P* and add a +BATT power symbol the the schematic - connect it to *pin 1* of the battery connector.
 
+Duplicate it and connect it to *pin 1* of the linear regulator too.
+
 ![Battery net][052]
 
 Duplicate a *GND* symbol from somewhere and connect it to *pin 2*:
