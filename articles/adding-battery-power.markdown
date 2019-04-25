@@ -96,7 +96,7 @@ And that's it, our circuit is complete!
 
 The whole battery wiring issue bothers me, and actually I wonder if you're better off *not* using connector with enforced orientation and simple marking on the board silkscreen (we'll get to that later) the polarity and simply solder in 2.00mm header pins.
 
-It's worth considering adding a power switch to the mix - this could be added between the +BATT symbol and the connector pin. In my experience so far, finding nice power switches is actually harder than you think.
+It's worth considering adding a power switch to the mix - this could be added between the +BATT symbol and the connector pin. In my experience so far, finding nice power switches is actually harder than you think. ( [Here's a nice one](https://uk.rs-online.com/web/p/products/1238939/) )
 
 As mentioned above, there's no protection against the battery over-discharging, although *most* LiPo cells do have that built in, it's probably not a good idea to rely on that.
 
