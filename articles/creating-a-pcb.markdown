@@ -38,6 +38,8 @@ I often add footprints to the PCB that don't appear on the schematic. Things lik
 
 It's easy to fix, you can just add an unconnected symbol to the schematic and associate the footprint you need to that, and this is probably the way you're *supposed* to do it, however, I'm not completely convinced this is the *proper* way, simply because for me, the schematic is a separate entity to the PCB. It should make sense on its own and having unconnected symbols on it that are only there for the PCB feels a bit icky to me. Obviously this is entirely opinion, so feel free to choose your own path.
 
+**FURTHER UPDATE**: The issue of un-associated footprints is only an issue in slightly earlier versions of KiCAD. The *Update PCB from schematic* option has been improved and now gives the option not to *Delete extra footprints* and it's unchecked by default.
+
 [065]: screenshots/065-new-pcb.png
 [066]: screenshots/066-read-netlist.png
 [067]: screenshots/067-netlist-read.png
