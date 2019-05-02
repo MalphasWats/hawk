@@ -28,6 +28,16 @@ Next choose the *Line* option from the *Place* menu - this tool allows you to dr
 
 I'm pretty sure this is how the *vast majority* of people design the shape of their boards, however, I don't do it that way and want to talk a little about how *I* do it in the next part.
 
+## Caveats
+
+After I posted the first version of this page I received some feedback that exporting/importing netlists between Eeschema (the schematic layout program) and PCBnew is not the *current* way to do things.
+
+Instead, changes made to the schematic can be brought over directly using the *Update PCB from Schematic...* option in the *Tools* menu of either program. This is definitely quicker and more straightforward, *HOWEVER*:
+
+I often add footprints to the PCB that don't appear on the schematic. Things like screw holes or silkscreen logos. Using the *Update PCB from Schematic* option automatically removes any footprints that aren't associated with a schematic symbol - using the netlist method doesn't do this by default. Later in this guide I add screw hole footprints directly to the PCB this way.
+
+It's easy to fix, you can just add an unconnected symbol to the schematic and associate the footprint you need to that, and this is probably the way you're *supposed* to do it, however, I'm not completely convinced this is the *proper* way, simply because for me, the schematic is a separate entity to the PCB. It should make sense on its own and having unconnected symbols on it that are only there for the PCB feels a bit icky to me. Obviously this is entirely opinion, so feel free to choose your own path.
+
 [065]: screenshots/065-new-pcb.png
 [066]: screenshots/066-read-netlist.png
 [067]: screenshots/067-netlist-read.png
