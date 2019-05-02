@@ -46,7 +46,7 @@ finally, duplicate the hole and put one in each corner:
 
 Switch back to PCBnew and import the .dxf file, but *this* time, place it on the *Eco1.User* layer - this layer is useful for comments and notes and anything that won't make it onto the final board - adding the screw hole outline here gives us guides to add the *actual* holes later:
 
-[Import .dxf][077]
+![Import .dxf][077]
 
 Once you import the .dxf file, the outline will be attached to your mouse. Here's where we need to take a little more care: we want the main outline of the 'new' shape to line up with the original shape on the *Edge.Cuts* layer. To do this, you will probably need to change the *Grid Size* from the drop down at the top. In this case, I've chosen the smallest (built-in) grid size of *0.01mm*. In reality, I'm not sure many fabs are actually that accurate, but we should try our best anyway.
 
