@@ -12,8 +12,8 @@ This repository takes a step-by-step look at creating a simple ATSAMD10-based de
 3. [Footprints & Net-lists.](https://github.com/MalphasWats/hawk/blob/master/articles/footprints-and-netlists.markdown)
 4. [Creating a PCB.](https://github.com/MalphasWats/hawk/blob/master/articles/creating-a-pcb.markdown)
 5. [Aside: Designing a Board Outline.](https://github.com/MalphasWats/hawk/blob/master/articles/designing-board-outline.markdown)
-6. Component Layout.
-7. Laying Traces.
-8. Filled Zones.
-9. Silkscreen.
+6. [Component Layout.](https://github.com/MalphasWats/hawk/blob/master/articles/component-layout.markdown)
+7. [Laying Traces.](https://github.com/MalphasWats/hawk/blob/master/articles/laying-traces.markdown)
+8. [Filled Zones.](https://github.com/MalphasWats/hawk/blob/master/articles/filling-zones.markdown)
+9. [Silkscreen.](https://github.com/MalphasWats/hawk/blob/master/articles/silkscreen.markdown)
 10. [PCB Manufacture.](https://github.com/MalphasWats/hawk/blob/master/articles/pcb-manufacture.markdown)
