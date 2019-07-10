@@ -200,9 +200,9 @@ void PTC_Handler                 ( void );
  */
 
 #include <core_cm0plus.h>
-#if !defined DONT_USE_CMSIS_INIT
-#include "system_samd10.h"
-#endif /* DONT_USE_CMSIS_INIT */
+//#if !defined DONT_USE_CMSIS_INIT
+//#include "system_samd10.h"
+//#endif /* DONT_USE_CMSIS_INIT */
 
 /*@}*/
 

@@ -1,5 +1,5 @@
 LDSCRIPT = lib/linker_scripts/samd10c14a_flash.ld
-BOOTUP = lib/startup_samd10.o lib/system_samd10.o
+BOOTUP = lib/startup_samd10.o
 MCUTYPE=__SAMD10C14A__
 
 OBJS=$(BOOTUP) blink.o
