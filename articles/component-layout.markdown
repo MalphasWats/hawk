@@ -39,7 +39,7 @@ This little window allows us to specify specific classes of objects to keep sele
 
 ![Filter Selection][085]
 
-(Techincally you only need the *Board outlines* option.)
+(Technically you only need the *Board outlines* option.)s
 
 Now you can move the board outline to properly centre the GPIO headers:
 
