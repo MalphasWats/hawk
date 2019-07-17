@@ -16,7 +16,7 @@ When I first started thinking about Surface Mount soldering, I thought you had t
 
 You can see that I've made a bit of a mess up by the linear regulator IC, which is ok, I'm not planning to populate that part of the circuit.
 
-Next I placed each component carefully - the 2 that *really* matter are the LED and the MCU - you have to make sure you orient them correctly. The MCU has a little dent in the plastic casing next to Pin 1, which goes at the top on our board. The LED will have a little symbol on the bottom which shows which way around it goes.
+Next I placed each component carefully - the 2 that *really* matter are the LED and the MCU - you have to make sure you orient them correctly. The MCU has a little spot on the plastic casing next to Pin 1, which goes at the top on our board. The LED will have a little symbol on the bottom which shows which way around it goes.
 
 ![Placed][03]
 
