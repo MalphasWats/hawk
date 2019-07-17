@@ -26,7 +26,7 @@ Once all of the parts were in place, I shot hot air at it until the solder melte
 
 Don't try moving it, it will take a while for the solder to cool and re-solidify and any movement during this time will knock components off their pads. Also the board itself is **HOT**.
 
-You might also notice that I stuck the board to my desk with some double sided tape. I thought this was a really clever idea that would help me to place things without everything sliding all over the place. It turned out to be a **REALLY BAD IDEA**. The heat from the hot air gun made the adhesive on the tap melt and stick to everything that I didn't want it to - I still have a sticky patch on my desk. It took a lot of effort to get it off the bottom of the board. I have since bought a nice little clamp harness thing.
+You might also notice that I stuck the board to my desk with some double sided tape. I thought this was a really clever idea that would help me to place things without everything sliding all over the place. It turned out to be a **REALLY BAD IDEA**. The heat from the hot air gun made the adhesive on the tape melt and stick to everything that I didn't want it to - I still have a sticky patch on my desk. It took a lot of effort to get it off the bottom of the board. I have since [bought a nice little pcb holder thing](https://thepihut.com/products/adafruit-fully-adjustable-pcb-clamp-holder-ada3791).
 
 Once it had cooled, I soldered some header pins to the programming header with a regular soldering iron.
 
