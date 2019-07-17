@@ -44,7 +44,7 @@ Now, here you can see that the ratsnest has updated and shows much easier to rou
 
 HOWEVER, I've had a few issues with this (it's probably related to doing the thing with netlists that you don't really need to do any more!).
 
-Notice here that I've *actually* clicked on Pin 5 for *GPIO_4* but *GPIO_5* has been highlighted? I'm pretty sure this is a bug in KiCAD - remember previously the pad we clicked *was* GPIO_6.
+Notice here that I've *actually* clicked on Pin 5 for *GPIO_4* but *GPIO_6* has been highlighted? I'm pretty sure this is a bug in KiCAD - remember previously the pad we clicked *was* GPIO_6.
 
 ![Wrong netlist][098]
 
