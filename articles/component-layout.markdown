@@ -35,11 +35,11 @@ Move the rest of the component footprints into place. This is only a *rough* pla
 
 Now, click and drag to draw a selection box around everything. Right-click and find the *Select* sub-menu (I've noticed that it moves around in the context menu, sometimes it's at the top, sometimes halfway down. I'm sure there's a reason but I've not worked it out yet.). Choose *Filter Selection*.
 
-This little window allows us to specify specific classes of objects to keep selected. We want to move the board outline (and *only* the board outline):
+This little window allows us to specify specific classes of objects to keep selected. We want to move the board outline (and *only* the board outline).
 
 ![Filter Selection][085]
 
-(Technically you only need the *Board outlines* option.)s
+Notice that both *Board outlines* and *Drawings* is selected here - that's because we have the markings for where we want our screw holes to be, which we'll add later. Selecting and moving them together ensures they stay lined up.
 
 Now you can move the board outline to properly centre the GPIO headers:
 
