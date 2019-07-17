@@ -34,7 +34,7 @@ Use *ctrl-d* to duplicate this 3 more times and place them on the remaining hole
 
 ![Duplicate screwholes][117]
 
-Don't forget to update the ground fill by pressing the *b* key.
+Don't forget to update the ground fill by pressing the *b* key, and re-run DRC to make sure nothing is overlapping.
 
 And that's it! We have successfully created our own PCB! The only thing left is to send the files off to a fab to have it manufactured!
 
