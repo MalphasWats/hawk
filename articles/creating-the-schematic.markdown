@@ -162,7 +162,7 @@ Press *A* to add a new symbol, expand the *Connector_Generic* category and find 
 
 ![SWD Connector][026]
 
-The SAMD10 is programmed using the Single-Wire-Debug (SWD) interface, so-called because it uses just a single wire. Plus one other wire, a reset wire, power and ground. So 5 wires. There are some standard connector layouts for SWD as part of the JTAG definition, but these tend to use connectors with at least 10 pins and as many as 20. I already have a nice little 2x3 programming ribbon cable so I'm using that. The nice thing about tutorials is you're entirely free to do it you're own way!
+The SAMD10 is programmed using the Single-Wire-Debug (SWD) interface, so-called because it uses just a single wire. Plus one other wire, a reset wire, power and ground. So 5 wires. There are some standard connector layouts for SWD as part of the JTAG definition, but these tend to use connectors with at least 10 pins and as many as 20. I already have a nice little 2x3 programming ribbon cable so I'm using that. The nice thing about tutorials is you're entirely free to do it your own way!
 
 Place the connector on the schematic and rename it to something useful. Remember you can hover over the *Conn_02x03_Odd_Even* label and press *E*. I've named it *SWD_PGM*.
 
