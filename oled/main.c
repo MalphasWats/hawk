@@ -3,8 +3,8 @@
 
 #define LED_PIN 5
 
-#define CLOCK           4
-#define MOSI            2
+#define CLOCK           15  //4
+#define MOSI            14  //2
 #define DATA_COMMAND    24
 #define CHIP_SELECT     8
 #define RESET           25
@@ -12,6 +12,38 @@
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define SCREEN_ROWS 8
+
+#define SSD1351_CMD_SETCOLUMN 		0x15
+#define SSD1351_CMD_SETROW    		0x75
+#define SSD1351_CMD_WRITERAM   		0x5C
+#define SSD1351_CMD_READRAM   		0x5D
+#define SSD1351_CMD_SETREMAP 		0xA0
+#define SSD1351_CMD_STARTLINE 		0xA1
+#define SSD1351_CMD_DISPLAYOFFSET 	0xA2
+#define SSD1351_CMD_DISPLAYALLOFF 	0xA4
+#define SSD1351_CMD_DISPLAYALLON  	0xA5
+#define SSD1351_CMD_NORMALDISPLAY 	0xA6
+#define SSD1351_CMD_INVERTDISPLAY 	0xA7
+#define SSD1351_CMD_FUNCTIONSELECT 	0xAB
+#define SSD1351_CMD_DISPLAYOFF 		0xAE
+#define SSD1351_CMD_DISPLAYON     	0xAF
+#define SSD1351_CMD_PRECHARGE 		0xB1
+#define SSD1351_CMD_DISPLAYENHANCE	0xB2
+#define SSD1351_CMD_CLOCKDIV 		0xB3
+#define SSD1351_CMD_SETVSL 		0xB4
+#define SSD1351_CMD_SETGPIO 		0xB5
+#define SSD1351_CMD_PRECHARGE2 		0xB6
+#define SSD1351_CMD_SETGRAY 		0xB8
+#define SSD1351_CMD_USELUT 		0xB9
+#define SSD1351_CMD_PRECHARGELEVEL 	0xBB
+#define SSD1351_CMD_VCOMH 		0xBE
+#define SSD1351_CMD_CONTRASTABC		0xC1
+#define SSD1351_CMD_CONTRASTMASTER	0xC7
+#define SSD1351_CMD_MUXRATIO            0xCA
+#define SSD1351_CMD_COMMANDLOCK         0xFD
+#define SSD1351_CMD_HORIZSCROLL         0x96
+#define SSD1351_CMD_STOPSCROLL          0x9E
+#define SSD1351_CMD_STARTSCROLL         0x9F
 
 uint8_t buffer[SCREEN_WIDTH * SCREEN_ROWS];
 
@@ -26,7 +58,7 @@ void delay(uint16_t n)
     }
 }
 
-void shift_out(uint8_t data)
+/*void shift_out(uint8_t data)
 {
     for (uint8_t i=0; i < 8; i++)
     {
@@ -42,6 +74,57 @@ void shift_out(uint8_t data)
         REG_PORT_OUT0 |= 1 << CLOCK;      // HIGH
         REG_PORT_OUT0 &= ~(1 << CLOCK);   // LOW
     }
+}*/
+
+void init_spi(void)
+{
+   PM->APBCMASK.bit.SERCOM0_ = 1;
+    GCLK->CLKCTRL.reg = GCLK_CLKCTRL_CLKEN | GCLK_CLKCTRL_ID_SERCOM0_CORE;
+    while(GCLK->STATUS.bit.SYNCBUSY);
+    const SERCOM_SPI_CTRLA_Type ctrla = {
+      .bit.DORD = 0, // MSB first
+      .bit.CPHA = 0, // Mode 0
+      .bit.CPOL = 0,
+      .bit.FORM = 0, // SPI frame
+      .bit.DIPO = 3, // MISO on PAD[3]
+      .bit.DOPO = 0, // MOSI on PAD[0], SCK on PAD[1], SS_ on PAD[2]
+      .bit.MODE = 3  // Master
+    };
+    SERCOM0->SPI.CTRLA.reg = ctrla.reg;
+    const SERCOM_SPI_CTRLB_Type ctrlb = {
+      .bit.RXEN = 0,   // RX enabled (not!)
+      .bit.MSSEN = 0,  // HW SS (off)
+      .bit.CHSIZE = 0 // 8-bit
+    };
+    SERCOM0->SPI.CTRLB.reg = ctrlb.reg;
+
+    SERCOM0->SPI.BAUD.reg = 1;//0; // Rate is clock / 2
+
+    // Mux for SERCOM1 PA16,PA17,PA18,PA19
+    const PORT_WRCONFIG_Type wrconfig = {
+      .bit.WRPINCFG = 1,
+      .bit.WRPMUX = 1,
+      .bit.PMUX = MUX_PA14C_SERCOM0_PAD0,
+      .bit.PMUXEN = 1,
+      .bit.HWSEL = 0,
+      .bit.PINMASK = (uint16_t)((PORT_PA14 | PORT_PA15))// | PORT_PA04))//>>16)// | PORT_PA18 | PORT_PA19) >> 16)
+    };
+    PORT->Group[0].WRCONFIG.reg = wrconfig.reg;
+
+    SERCOM0->SPI.CTRLA.bit.ENABLE = 1;
+    while(SERCOM0->SPI.SYNCBUSY.bit.ENABLE);
+
+    //REG_PORT_OUT0 |= (1<<LED_PIN);
+}
+
+//uint8_t shift_out(uint8_t data)
+void shift_out(uint8_t data)
+{
+    while(SERCOM0->SPI.INTFLAG.bit.DRE == 0);
+    SERCOM0->SPI.DATA.reg = data;
+    while(SERCOM0->SPI.INTFLAG.bit.TXC == 0);
+    //REG_PORT_OUT0 ^= (1<<LED_PIN);
+    //return SERCOM0->SPI.DATA.reg;
 }
 
 void initialise_oled(void)
@@ -252,22 +335,171 @@ void set_clock()
     while (GCLK->STATUS.bit.SYNCBUSY) {}; // Wait for synchronization
 }
 
+void writeCommand(uint8_t data)
+{
+    REG_PORT_OUT0 &= ~(1 << DATA_COMMAND);        // LOW (Command Mode)
+
+    shift_out(data);
+}
+
+void writeData(uint8_t data)
+{
+    REG_PORT_OUT0 |= 1 << DATA_COMMAND;      // Data Mode
+
+    shift_out(data);
+}
+
+void init1351()
+{
+    REG_PORT_OUT0 &= ~(1 << CHIP_SELECT);                // LOW (Enabled)
+
+    REG_PORT_OUT0 |= 1 << RESET;          // HIGH
+    delay(50);
+    REG_PORT_OUT0 &= ~(1 << RESET);       // LOW
+    delay(50);
+    REG_PORT_OUT0 |= 1 << RESET;          // HIGH
+    delay(50);
+
+    // Initialization Sequence
+    writeCommand(SSD1351_CMD_COMMANDLOCK);  // set command lock
+    writeData(0x12);
+    writeCommand(SSD1351_CMD_COMMANDLOCK);  // set command lock
+    writeData(0xB1);
+
+    writeCommand(SSD1351_CMD_DISPLAYOFF);  		// 0xAE
+
+    writeCommand(SSD1351_CMD_CLOCKDIV);  		// 0xB3
+    //writeCommand(0xF1);  						// 7:4 = Oscillator Frequency,
+                                                //3:0 = CLK Div Ratio (A[3:0]+1 = 1..16)
+    //writeData(0xF1);
+    writeData(0x00);
+
+
+    writeCommand(SSD1351_CMD_MUXRATIO);
+    writeData(127);
+
+    writeCommand(SSD1351_CMD_SETREMAP);
+    writeData(0x74);
+
+    writeCommand(SSD1351_CMD_SETCOLUMN);
+    writeData(0x00);
+    writeData(0x7F);
+    writeCommand(SSD1351_CMD_SETROW);
+    writeData(0x00);
+    writeData(0x7F);
+
+    writeCommand(SSD1351_CMD_STARTLINE); 		// 0xA1
+    writeData(0x0);
+
+    writeCommand(SSD1351_CMD_DISPLAYOFFSET); 	// 0xA2
+    writeData(0x0);
+
+    writeCommand(SSD1351_CMD_SETGPIO);
+    writeData(0x00);
+
+    writeCommand(SSD1351_CMD_FUNCTIONSELECT);
+    writeData(0x01); // internal (diode drop)
+    //writeData(0x01); // external bias
+
+//    writeCommand(SSSD1351_CMD_SETPHASELENGTH);
+//    writeData(0x32);
+
+    writeCommand(SSD1351_CMD_PRECHARGE);  		// 0xB1
+    //writeCommand(0x32);
+    writeData(0x32);
+
+    writeCommand(SSD1351_CMD_VCOMH);  			// 0xBE
+    //writeCommand(0x05);
+    writeData(0x05);
+
+    writeCommand(SSD1351_CMD_NORMALDISPLAY);  	// 0xA6
+
+    writeCommand(SSD1351_CMD_CONTRASTABC);
+    writeData(0xC8);
+    writeData(0x80);
+    writeData(0xC8);
+
+    writeCommand(SSD1351_CMD_CONTRASTMASTER);
+    writeData(0x0F);
+
+    writeCommand(SSD1351_CMD_SETVSL );
+    writeData(0xA0);
+    writeData(0xB5);
+    writeData(0x55);
+
+    writeCommand(SSD1351_CMD_PRECHARGE2);
+    writeData(0x01);
+
+    writeCommand(SSD1351_CMD_DISPLAYON);		//--turn on oled panel
+
+    writeCommand(SSD1351_CMD_WRITERAM);
+
+    REG_PORT_OUT0 ^= (1<<LED_PIN);
+}
+
+
 int main()
 {
     set_clock();
 
-    REG_PORT_DIR0 |= (1<<CLOCK) | (1<<MOSI) | (1<<DATA_COMMAND) | (1<<CHIP_SELECT) | (1<<RESET);
-
-    initialise_oled();
-
+    //REG_PORT_DIR0 |= (1<<CLOCK) | (1<<MOSI) | (1<<DATA_COMMAND) | (1<<CHIP_SELECT) | (1<<RESET) | (1<<LED_PIN);
+    REG_PORT_DIR0 |= (1<<DATA_COMMAND) | (1<<CHIP_SELECT) | (1<<RESET) | (1<<LED_PIN);
     uint8_t i = 0;
+
+    init_spi();
+
+    //initialise_oled();
+    init1351();
+    //REG_PORT_OUT0 &= ~(1<<LED_PIN);
+    //REG_PORT_OUT0 |= (1<<LED_PIN);
+
+    REG_PORT_OUT0 |= 1 << DATA_COMMAND;      // Data Mode
+
+
+
+        //REG_PORT_OUT0 |= (1 << CHIP_SELECT);                // Hi (disabled)
+    uint16_t col = 0;
+
+    uint8_t ct[] = {0x0f, 0x0f};
+    uint8_t cb[] = {0xf0, 0x0f};
+
+    uint8_t cnt = 0;
 
     while(1)
     {
         //clear_buffer();
-        draw_int(255-i, 3, 12*8, 6*8);
-        draw_int(i++, 3, 8, 8);
-        draw();
+
+        //draw_int(255-i, 3, 12*8, 6*8);
+        //draw_int(i++, 3, 8, 8);
+        //draw();
+
+        //for (uint16_t i=0 ; i=128*128 ; i++)
+        //{
+        //    shift_out(0xff);
+        //    shift_out(0xff);
+        //}
+
+        for (uint16_t i=0 ; i<128*128 ; i++)
+        {
+            //shift_out(cb[col]);
+            //shift_out(ct[col]);
+
+            while(SERCOM0->SPI.INTFLAG.bit.DRE == 0);
+            SERCOM0->SPI.DATA.reg = cb[col];
+            //while(SERCOM0->SPI.INTFLAG.bit.TXC == 0);
+
+            //while(SERCOM0->SPI.INTFLAG.bit.DRE == 0);
+            SERCOM0->SPI.DATA.reg = ct[col];
+            //while(SERCOM0->SPI.INTFLAG.bit.TXC == 0);
+        }
+        cnt += 1;
+        if (cnt == 40)
+        {
+            col += 1;
+            if (col > 1)
+                col=0;
+            cnt = 0;
+        }
 
         //delay(100);
     }
