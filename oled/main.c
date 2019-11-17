@@ -450,8 +450,12 @@ int main()
 
     //initialise_oled();
     init1351();
-    //REG_PORT_OUT0 &= ~(1<<LED_PIN);
+    REG_PORT_OUT0 &= ~(1<<LED_PIN);
     //REG_PORT_OUT0 |= (1<<LED_PIN);
+
+    //SERCOM0->SPI.BAUD.reg = 0;//0; // Rate is clock / 2
+    //SERCOM0->SPI.CTRLA.bit.ENABLE = 1;
+    //while(SERCOM0->SPI.SYNCBUSY.bit.ENABLE);
 
     REG_PORT_OUT0 |= 1 << DATA_COMMAND;      // Data Mode
 
@@ -460,10 +464,15 @@ int main()
         //REG_PORT_OUT0 |= (1 << CHIP_SELECT);                // Hi (disabled)
     uint16_t col = 0;
 
-    uint8_t ct[] = {0x0f, 0x0f};
-    uint8_t cb[] = {0xf0, 0x0f};
+    //          RED   GREEN  BLUE
+    // Colours xxxxx xxxxxx xxxxx
+
+    uint8_t ct[] = {0x00, 0xf0};
+    uint8_t cb[] = {0x0f, 0x00};
 
     uint8_t cnt = 0;
+    uint8_t sx = 0;
+    uint8_t sy = 0;
 
     while(1)
     {
@@ -479,17 +488,47 @@ int main()
         //    shift_out(0xff);
         //}
 
-        for (uint16_t i=0 ; i<128*128 ; i++)
+        for (uint8_t y = 0 ; y < 128 ; y++)
+        {
+            for (uint8_t x = 0 ; x < 128 ; x++)
+            {
+                col = 0;
+                if (y >= sy && y < sy+10 && x >= sx && x <= sx+10)
+                {
+                    col = 1;
+                }
+
+                while(SERCOM0->SPI.INTFLAG.bit.DRE == 0);
+                SERCOM0->SPI.DATA.reg = ct[col];
+                //while(SERCOM0->SPI.INTFLAG.bit.TXC == 0);
+
+                //while(SERCOM0->SPI.INTFLAG.bit.DRE == 0);
+                SERCOM0->SPI.DATA.reg = cb[col];
+            }
+        }
+
+        sx += 4;
+        if (sx > 128-10)
+        {
+            sy+=10;
+            sx=0;
+        }
+        if (sy > 128-10)
+        {
+            sy = 0;
+        }
+
+        /*for (uint16_t i=0 ; i<128*128 ; i++)
         {
             //shift_out(cb[col]);
             //shift_out(ct[col]);
 
             while(SERCOM0->SPI.INTFLAG.bit.DRE == 0);
-            SERCOM0->SPI.DATA.reg = cb[col];
+            SERCOM0->SPI.DATA.reg = ct[col];
             //while(SERCOM0->SPI.INTFLAG.bit.TXC == 0);
 
             //while(SERCOM0->SPI.INTFLAG.bit.DRE == 0);
-            SERCOM0->SPI.DATA.reg = ct[col];
+            SERCOM0->SPI.DATA.reg = cb[col];
             //while(SERCOM0->SPI.INTFLAG.bit.TXC == 0);
         }
         cnt += 1;
@@ -499,7 +538,7 @@ int main()
             if (col > 1)
                 col=0;
             cnt = 0;
-        }
+        }*/
 
         //delay(100);
     }
