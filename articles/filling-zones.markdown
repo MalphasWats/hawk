@@ -46,6 +46,7 @@ And here's our electrically complete board:
 
 ![DRC OK][111]
 
+[104]: screenshots/104-pcb-capabilities.png
 [105]: screenshots/105-ground-zone.png
 [106]: screenshots/106-ground-zone-filled.png
 [107]: screenshots/107-DRC.png
