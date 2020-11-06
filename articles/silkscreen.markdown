@@ -16,7 +16,7 @@ Repeat this and place all of the silkscreen text so that it clearly identifies e
 
 ![Tidy Silkscreen][114]
 
-You can also add free text using the text tool on the middle toolbar.
+You can also add free text using the text tool on the middle toolbar. Just make sure that the *F.SilkS* layer is selected.
 
 Lastly, we'll add some holes and align them with our screwhole marks. Choose *Place > Footprint* from the menu or press *o*. Click anywhere on the board to bring up the Footprint Browser - this may take a while to load.
 
